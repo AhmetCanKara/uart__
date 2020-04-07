@@ -46,6 +46,10 @@ UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
 
+char tx_value[50];
+uint8_t rx_value;
+char rx_buffer[50];
+uint8_t i=0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -53,13 +57,35 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_USART2_UART_Init(void);
 /* USER CODE BEGIN PFP */
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+{
 
+
+		if(rx_value != 10){
+			rx_buffer[i++]=(char) rx_value;
+
+		}
+		else{
+			i=0;
+
+			for(int index=0; index<=49; index++){
+				rx_buffer[index]=NULL;
+			}
+
+
+
+		}
+		HAL_UART_Receive_IT(&huart2, &rx_value, 1);
+
+
+}
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
-char tx_value[50];
+
+
 
 /* USER CODE END 0 */
 
@@ -95,6 +121,10 @@ int main(void)
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
 
+
+
+  HAL_UART_Receive_IT(&huart2, &rx_value, 1);
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -107,7 +137,8 @@ int main(void)
 
 
 	  //HAL_UART_Transmit(&huart2,(uint8_t *)tx_value,sprintf(tx_value,"A\n"),100);
-	  HAL_UART_Receive(&huart2,(uint8_t *)tx_value,50,100);
+	// HAL_UART_Receive(&huart2,(uint8_t *)tx_value,50,100);
+
 
   }
   /* USER CODE END 3 */
@@ -198,6 +229,7 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+
 
 /* USER CODE END 4 */
 
