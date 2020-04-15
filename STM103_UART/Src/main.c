@@ -69,7 +69,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 			i=0;
 
 
-			if(strstr((const char *)rx_buffer,(const char *)"AESK")!=NULL){
+			if(strstr((const char *)rx_buffer,(const char *)"AESK")==NULL){
 				memset(rx_buffer,'\0',sizeof(rx_buffer));
 			}
 
