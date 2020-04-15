@@ -23,7 +23,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "string.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -68,10 +68,10 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 		else{
 			i=0;
 
-			for(int index=0; index<=49; index++){
-				rx_buffer[index]=NULL;
-			}
 
+			if(strstr((const char *)rx_buffer,(const char *)"AESK")!=NULL){
+				memset(rx_buffer,'\0',sizeof(rx_buffer));
+			}
 
 
 		}
